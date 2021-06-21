@@ -22,7 +22,7 @@
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> Home</h1>
+            <h1><i class="fa fa-home"></i> Home</h1>
             {{-- <p>A free and open source Bootstrap 4 admin template</p> --}}
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -75,6 +75,7 @@
                                 <tr>
                                     <th>surnames</th>
                                     <th>names</th>
+                                    <th>email</th>
                                     <th>date of birth</th>
                                     <th>gender</th>
                                 </tr>
@@ -99,25 +100,28 @@
     </script>
     <script type="module">
         import {
-            Estudiantes
+            estudiantes
         } from "/js/data.js"
         import {
             total,
             birthdayMonth,
-            gender
+            gender,
+            edades
         } from '/js/mapping.js'
         var data = ''
-        for (let estudiante of Estudiantes) {
+        for (let estudiante of estudiantes) {
             const {
-                nombre,
+                nombres,
                 apellidos,
+                correo,
                 nacimiento,
                 sexo
             } = estudiante
             data +=
-                '<tr>' +
-                `<td > ${apellidos} </td>` +
-                `<td > ${nombre}</td>` +
+            '<tr>' +
+                `<td > ${apellidos.toUpperCase()} </td>` +
+                `<td > ${nombres.toUpperCase()}</td>` +
+                `<td > ${correo}</td>` +
                 `<td > ${nacimiento} </td>` +
                 `<td > ${sexo}</td>`
             '</tr>'
@@ -127,6 +131,6 @@
         document.querySelector('#birthdayMonth').innerHTML = birthdayMonth()
         document.querySelector('#male').innerHTML = gender('M')
         document.querySelector('#female').innerHTML = gender('F')
-
+        console.log(estudiantes);
     </script>
 @endsection

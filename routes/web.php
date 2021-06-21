@@ -17,4 +17,5 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/chart', [App\Http\Controllers\ChartController::class, 'chart'])->name('chart');
 
