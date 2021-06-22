@@ -56,9 +56,12 @@
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="module">
-        import { labelsAges, countAges } from '/js/mapping.js'
-        let labels = [0,...labelsAges()];
-        let dates = [0,...countAges()];
+        import {
+            labelsAges,
+            countAges
+        } from '/js/mapping.js'
+        let labels = labelsAges();
+        let dates = countAges();
 
         var ctx = document.getElementById('ages').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -72,7 +75,7 @@
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
+                        'rgba(25, 132, 12, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)',
                         'rgba(42, 114, 122, 1)',
@@ -83,23 +86,24 @@
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
+                        'rgba(25, 132, 12, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)',
                         'rgba(42, 114, 122, 1)',
                         'rgba(230, 130, 215, 1)',
                         'rgba(128, 190, 120, 1)'
                     ],
-                    borderWidth: 1
                 }]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
-            }
+            },
         });
     </script>
 

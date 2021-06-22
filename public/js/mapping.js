@@ -2,14 +2,21 @@ import { estudiantes } from "/js/data.js";
 
 export const edades = () => {
     const arr = estudiantes.map((e) => {
-        let monthAct = new Date().getMonth();
-        let yearAct = new Date().getFullYear();
+        const dateAct = new Date();
+        let monthAct = dateAct.getMonth();
+        let yearAct = dateAct.getFullYear();
+        let dayAct = dateAct.getDate();
         let year = new Date(e.nacimiento).getFullYear();
         let month = new Date(e.nacimiento).getMonth();
+        let day = new Date(e.nacimiento).getDate();
         let edad = yearAct - year;
 
         if (month > monthAct) {
             edad -= 1;
+        } else if (month == monthAct) {
+            if (day > dayAct) {
+                edad -= 1;
+            }
         }
         return edad;
     });
@@ -19,25 +26,22 @@ export const edades = () => {
 export const labelsAges = () => [...new Set(edades().sort())];
 
 export const countAges = () => {
-
     let arr = edades().sort();
     let cont = 0;
     let arr2 = [];
 
-    labelsAges().forEach(e => {
-        arr.forEach(e2 => {
+    labelsAges().forEach((e) => {
+        arr.forEach((e2) => {
             if (e == e2) {
-                cont +=1;
+                cont += 1;
             }
         });
         arr2.push(cont);
         cont = 0;
     });
-    
+
     return arr2;
-}
-
-
+};
 
 export const total = () => {
     return estudiantes.length;
@@ -56,13 +60,12 @@ export const birthdayMonth = () => {
 };
 
 export const gender = (genero) => {
-
-    var count = 0
+    var count = 0;
     for (const student of estudiantes) {
-        const gender = student.sexo
+        const gender = student.sexo;
         if (gender == genero) {
-            count++
+            count++;
         }
     }
-    return count
+    return count;
 };
