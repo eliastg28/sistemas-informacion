@@ -45,7 +45,7 @@
             <div class="tile">
                 <h3 class="tile-title">Pie Chart</h3>
                 <div class="embed-responsive embed-responsive-16by9">
-                    <canvas class="embed-responsive-item" id="#"></canvas>
+                    <canvas class="embed-responsive-item" id="gender"></canvas>
                 </div>
             </div>
         </div>
@@ -58,10 +58,12 @@
     <script type="module">
         import {
             labelsAges,
-            countAges
+            countAges,
+            countGender
         } from '/js/mapping.js'
         let labels = labelsAges();
         let dates = countAges();
+        let numGender = countGender();
 
         var ctx = document.getElementById('ages').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -81,18 +83,7 @@
                         'rgba(42, 114, 122, 1)',
                         'rgba(230, 130, 215, 1)',
                         'rgba(128, 190, 120, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(25, 132, 12, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(42, 114, 122, 1)',
-                        'rgba(230, 130, 215, 1)',
-                        'rgba(128, 190, 120, 1)'
-                    ],
+                    ]
                 }]
             },
             options: {
@@ -105,6 +96,25 @@
                 }
             },
         });
+
+        var ctx = document.getElementById('gender');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Hombres',
+                    'Mujeres'
+                ],
+                datasets: [{
+                    data: numGender,
+                    backgroundColor: [
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 99, 132)'
+                    ]
+                }]
+            }
+        });
+
     </script>
 
 @endsection

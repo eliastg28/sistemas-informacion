@@ -69,3 +69,14 @@ export const gender = (genero) => {
     }
     return count;
 };
+
+export const countGender = () => {
+    let male = 0;
+    let female = 0;
+    for (const student of estudiantes) {
+        const gender = student.sexo;
+        gender == 'M' ? male += 1 : female += 1;
+    }
+    let totalGender = [male,female];
+    return totalGender;
+};
