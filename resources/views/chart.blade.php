@@ -1,4 +1,4 @@
-@extends('layout.template')
+@extends('layouts.template')
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
     {{-- <a class="navbar-brand" href="#">Information Systems</a> --}}

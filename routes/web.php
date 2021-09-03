@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/chart', [App\Http\Controllers\ChartController::class, 'chart'])->name('chart');
 
+Route::get('/chart', [App\Http\Controllers\ChartController::class, 'chart'])->name('chart')->middleware('auth');
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');

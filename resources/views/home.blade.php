@@ -1,4 +1,4 @@
-@extends('layout.template')
+@extends('layouts.template')
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
@@ -7,13 +7,31 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse ml-auto" id="navbarNav">
+    <div class="collapse navbar-collapse ml-auto d-flex justify-content-between" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="/home">Home</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/chart">Chart</a>
+            </li>
+        </ul>
+
+        <ul class="nav nav-tabs">
+            <!-- User Menu-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false"><i class="fa fa-user fa-lg mr-2"></i> {{ Auth::user()->name }}</a>
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </ul>
             </li>
         </ul>
     </div>
@@ -96,7 +114,6 @@
         $(document).ready(function() {
             $('#sampleTable').DataTable();
         });
-
     </script>
     <script type="module">
         import {
@@ -118,7 +135,7 @@
                 sexo
             } = estudiante
             data +=
-            '<tr>' +
+                '<tr>' +
                 `<td > ${apellidos.toUpperCase()} </td>` +
                 `<td > ${nombres.toUpperCase()}</td>` +
                 `<td > ${correo}</td>` +
@@ -131,7 +148,5 @@
         document.querySelector('#birthdayMonth').innerHTML = birthdayMonth()
         document.querySelector('#male').innerHTML = gender('M')
         document.querySelector('#female').innerHTML = gender('F')
-        console.log(estudiantes);
     </script>
 @endsection
-
