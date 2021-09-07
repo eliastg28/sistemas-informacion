@@ -13,7 +13,43 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
+        {{-- <a class="navbar-brand" href="#">Information Systems</a> --}}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ml-auto d-flex justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Home</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/chart">Chart</a>
+                </li>
+            </ul>
 
+            <ul class="nav nav-tabs">
+                <!-- User Menu-->
+                <li class="nav-item dropdown" style="border: none;">
+                    <a class="nav-link dropdown-toggle" style="font-size: 16px; color: black;" href="#" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg mr-2"></i>
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <main class="container">
         @yield('content')
     </main>

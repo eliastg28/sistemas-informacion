@@ -1,23 +1,5 @@
 @extends('layouts.template')
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
-    {{-- <a class="navbar-brand" href="#">Information Systems</a> --}}
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse ml-auto" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/home">Home</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/chart">Chart</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
 @section('content')
 
 
@@ -55,24 +37,23 @@
 
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script type="module">
-        import {
-            labelsAges,
-            countAges,
-            countGender
-        } from '/js/mapping.js'
-        let labels = labelsAges();
-        let dates = countAges();
-        let numGender = countGender();
-
+    <script>
         var ctx = document.getElementById('ages').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: [
+                    @foreach ($labelAges as $label)
+                        {{ $label }},
+                    @endforeach
+                ],
                 datasets: [{
                     label: 'Ages',
-                    data: dates,
+                    data: [
+                        @foreach ($quantitieAges as $data)
+                            {{ $data }},
+                        @endforeach
+                    ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -102,11 +83,16 @@
             type: 'pie',
             data: {
                 labels: [
-                    'Hombres',
-                    'Mujeres'
+                    'Male',
+                    'Famale'
                 ],
                 datasets: [{
-                    data: numGender,
+                    label: 'Gender',
+                    data: [
+                        @foreach ($dataGender as $data)
+                            {{ $data }},
+                        @endforeach
+                    ],
                     backgroundColor: [
                         'rgb(54, 162, 235)',
                         'rgb(255, 99, 132)'
@@ -114,7 +100,6 @@
                 }]
             }
         });
-
     </script>
 
 @endsection
