@@ -18,17 +18,17 @@ class chartController extends Controller
         $students = Student::all();
 
         $ages = array();
-    // logic ages
+        // logic ages
         foreach ($students as $key => $student) {
             $birth_month = date("m", strtotime($student->birth));
             $birth_day = date("d", strtotime($student->birth));
             $birth_year = date("Y", strtotime($student->birth));
 
             $age = ($year - $birth_year);
-            if($birth_month > $month){
+            if ($birth_month > $month) {
                 $age += 1;
-            }else if($birth_month == $month){
-                if($birth_day > $day){
+            } else if ($birth_month == $month) {
+                if ($birth_day > $day) {
                     $age += 1;
                 }
             }
@@ -38,10 +38,11 @@ class chartController extends Controller
         asort($ages);
         $quantitieAges = array_count_values($ages);
         $labelAges = array_values(array_unique($ages));
-    // end logic ages
-    $totalMale = DB::table('students')->where('gender', '=', 'M')->count();
-    $totalFamale = DB::table('students')->where('gender', '=', 'F')->count();
-     $dataGender = array($totalMale, $totalFamale);
+        // end logic ages
+        $totalMale = DB::table('students')->where('gender', '=', 'M')->count();
+        $totalFamale = DB::table('students')->where('gender', '=', 'F')->count();
+        $dataGender = array($totalMale, $totalFamale);
+        // return session('audit');
         return view('chart', compact('quantitieAges', 'labelAges', 'dataGender'));
     }
 }

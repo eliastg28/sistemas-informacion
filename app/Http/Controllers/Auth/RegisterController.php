@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Audit;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use UAParser\Parser;
 
 class RegisterController extends Controller
 {
@@ -69,5 +76,72 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+        $this->au_session();
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
+    }
+
+    public function au_session()
+    {
+        $agentUser = $_SERVER["HTTP_USER_AGENT"];
+        $parser = Parser::create();
+        $result = $parser->parse($agentUser);
+        $browser = $result->ua->toString();
+        $device = $result->device->toString();
+        $system = $result->os->toString();
+
+        $audit = Audit::create(['user_id' => Auth::user()->id]);
+
+        DB::table('audit_sessions')->insert([
+            'browser' => $browser,
+            'device' => $device,
+            'system' => $system,
+            'date_init' => $this->parser_datecurrent_integer(),
+            'time_hours_init' => $this->parser_timecurrent_integer('hours'),
+            'time_minutes_init' => $this->parser_timecurrent_integer('minutes'),
+            'time_seconds_init' => $this->parser_timecurrent_integer('seconds'),
+            'date_final' => 0,
+            'time_hours_final' => 0,
+            'time_minutes_final' => 0,
+            'time_seconds_final' => 0,
+            'audit_id' => $audit->id
+
+        ]);
+        session(['audit' => $audit->id]);
+    }
+
+    private function parser_datecurrent_integer()
+    {
+        date_default_timezone_set('UTC');
+        $year = intval(date('Y'));
+        $month =  intval(date('m'));
+        $day =  intval(date('d'));
+        return $year + $month + $day;
+    }
+    private function parser_timecurrent_integer($date)
+    {
+        $hour = intval(date('H'));
+        $minute = intval(date('i'));
+        $second = intval(date('s'));
+        if($date == 'hours'){
+            return $hour;
+        }else if($date == 'minutes'){
+            return $minute;
+        }
+        return $second;
     }
 }
