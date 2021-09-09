@@ -29,3 +29,6 @@ Route::get('/student/create', [App\Http\Controllers\StudentController::class, 'c
 Route::post('/student', [App\Http\Controllers\StudentController::class, 'store'])->name('student.store')->middleware('auth');
 Route::get('/student/edit/{student}', [App\Http\Controllers\StudentController::class, 'edit'])->name('student.edit')->middleware('auth');
 Route::post('/student/update/{student}', [App\Http\Controllers\StudentController::class, 'update'])->name('student.update')->middleware('auth');
+
+Route::get('/mail/{student}', [\App\Http\Controllers\MailController::class, 'sendMail'])->name('mail');
+Route::get('/birthday', [\App\Http\Controllers\ControlController::class, 'birthdayStudents'])->name('birthday')->middleware('auth');

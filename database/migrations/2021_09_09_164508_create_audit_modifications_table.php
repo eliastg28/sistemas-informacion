@@ -4,9 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuditsTable extends Migration
+class CreateAuditModificationsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,9 +13,13 @@ class CreateAuditsTable extends Migration
      */
     public function up()
     {
-        Schema::create('audits', function (Blueprint $table) {
+        Schema::create('audit_modifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->string('type');
+            $table->string('status');
+            $table->integer('data');
+            $table->integer('permanence');
+            $table->foreignId('audit_id')->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateAuditsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audits');
+        Schema::dropIfExists('audit_modifications');
     }
 }

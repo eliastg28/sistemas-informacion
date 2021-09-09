@@ -1,8 +1,4 @@
 @extends('layouts.template')
-
-
-
-
 @section('content')
     <div class="app-title">
         <div>
@@ -16,37 +12,37 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-lg-3">
-            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+            <a href="{{ route('student.index') }}" style="text-decoration: none;" class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                 <div class="info">
                     <h4>Student</h4>
                     <p><b>{{ $total }}</b></p>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="widget-small info coloured-icon"><i class="icon fas fa-birthday-cake fa-3x"></i>
+            <a href="{{ route('birthday')}}" style="text-decoration: none;" class="widget-small info coloured-icon"><i class="icon fas fa-birthday-cake fa-3x"></i>
                 <div class="info">
                     <h4>Birthday</h4>
                     <p><b>{{ $birthday }}</b></p>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="widget-small warning coloured-icon"><i class="icon fas fa-male fa-3x"></i>
+            <a href="#" style="text-decoration: none;" class="widget-small warning coloured-icon"><i class="icon fas fa-male fa-3x"></i>
 
                 <div class="info">
                     <h4>man</h4>
                     <p><b>{{ $totalMale }}</b></p>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="widget-small danger coloured-icon"><i class="icon fas fa-female fa-3x"></i>
+            <a href="#" style="text-decoration: none;" class="widget-small danger coloured-icon"><i class="icon fas fa-female fa-3x"></i>
                 <div class="info">
                     <h4>woman</h4>
                     <p><b>{{ $totalFamale }}</b></p>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="row">
@@ -71,6 +67,7 @@
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script>
+
         var ctx = document.getElementById('ages').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -133,5 +130,7 @@
                 }]
             }
         });
+
+
     </script>
 @endsection

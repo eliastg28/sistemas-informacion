@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use function GuzzleHttp\Promise\all;
@@ -21,6 +22,10 @@ class StudentController extends Controller
         //
         $students = Student::all();
         $url = 'Students';
+        // valores para la auditoria
+        $type = 'view';
+        $status = 'success';
+        $this->au_modifications($type, 0, $status, 0);
         return view('student.index', compact('url', 'students'));
     }
 
@@ -46,15 +51,11 @@ class StudentController extends Controller
     {
         //
         $student = Student::create($request->all());
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make('password')
-        ]);
-
+        // valores para la auditoria
+        $type = 'create';
+        $status = 'success'; // si se produce un validacion erronea sera (error, warning, ..)
+        $this->au_modifications($type, $student->id, $status, 0);
         return redirect()->route('student.index');
-
     }
 
     /**
@@ -79,7 +80,6 @@ class StudentController extends Controller
         //
         $url = 'Students';
         return view('student.edit', compact('url', 'student'));
-        return redirect()->route('student.index');
     }
 
     /**
@@ -92,7 +92,25 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         //
-        $student = Student::find($student->id)->update($request->all());
+        $permanence = Student::find($student->id);
+        $id = DB::table('audit_permanence')->insertGetId([
+            'name' => $permanence->name,
+            'surname' => $permanence->surname,
+            'email' => $permanence->email,
+            'gender' => $permanence->gender,
+            'birth' => $permanence->birth
+        ]);
+        Student::find($student->id)->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'birth' => $request->birth
+        ]);
+
+        $type = 'update';
+        $status = 'success'; // si se produce un validacion erronea sera (error, warning, ...)
+        $this->au_modifications($type, $student->id, $status, $id);
         return redirect()->route('student.index');
     }
 
@@ -105,5 +123,18 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+    }
+
+
+    private function au_modifications($type, $data, $status, $permanence)
+    {
+        $audit = session('audit');
+        DB::table('audit_modifications')->insert([
+            'type' => $type,
+            'status' => $status,
+            'data' => $data,
+            'permanence' => $permanence,
+            'audit_id' => $audit
+        ]);
     }
 }
