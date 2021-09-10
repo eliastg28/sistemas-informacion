@@ -68,8 +68,8 @@ class ControlController extends Controller
 
     public function history()
     {
-        $audits = DB::select('SELECT us.name, COUNT(us.name) AS audit FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id GROUP BY(us.name)');
-        $users  =  DB::select('SELECT user_id FROM `audits` GROUP BY (user_id)');
+        $audits = DB::select('SELECT us.name, COUNT(us.name) AS audit FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id GROUP BY(us.name) ORDER BY (us.name)');
+        $users  =  DB::select('SELECT us.id FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id ORDER BY (us.name)');
         $url = 'History';
         return view('history.index', compact('url', 'audits', 'users'));
     }
