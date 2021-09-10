@@ -1,5 +1,7 @@
 <?php
-
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\ControlController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -21,19 +23,19 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 // Route::resource('student', StudentController::class)->middleware('auth');
-Route::get('/student', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index')->middleware('auth');
-Route::get('/student/create', [App\Http\Controllers\StudentController::class, 'create'])->name('student.create')->middleware('auth');
-Route::post('/student', [App\Http\Controllers\StudentController::class, 'store'])->name('student.store')->middleware('auth');
-Route::get('/student/edit/{student}', [App\Http\Controllers\StudentController::class, 'edit'])->name('student.edit')->middleware('auth');
-Route::post('/student/update/{student}', [App\Http\Controllers\StudentController::class, 'update'])->name('student.update')->middleware('auth');
+Route::get('/student', [StudentController::class, 'index'])->name('student.index')->middleware('auth');
+Route::get('/student/create', [StudentController::class, 'create'])->name('student.create')->middleware('auth');
+Route::post('/student', [StudentController::class, 'store'])->name('student.store')->middleware('auth');
+Route::get('/student/edit/{student}', [StudentController::class, 'edit'])->name('student.edit')->middleware('auth');
+Route::post('/student/update/{student}', [StudentController::class, 'update'])->name('student.update')->middleware('auth');
 
-Route::get('/mail/{student}', [\App\Http\Controllers\MailController::class, 'sendMail'])->name('mail')->middleware('auth');
-Route::get('/birthday', [\App\Http\Controllers\ControlController::class, 'birthdayStudents'])->name('birthday')->middleware('auth');
+Route::get('/mail/{student}', [MailController::class, 'sendMail'])->name('mail')->middleware('auth');
+Route::get('/birthday', [ControlController::class, 'birthdayStudents'])->name('birthday')->middleware('auth');
 
-Route::get('/analytics', [\App\Http\Controllers\ControlController::class, 'analytics'])->name('analytics')->middleware('auth');
-Route::get('/history', [\App\Http\Controllers\ControlController::class, 'history'])->name('history')->middleware('auth');
-Route::get('/history/detail/{user}', [\App\Http\Controllers\ControlController::class, 'detail'])->name('history.detail')->middleware('auth');
-Route::get('/history/audit/detail/{audit}', [\App\Http\Controllers\ControlController::class, 'methods'])->name('history.history')->middleware('auth');
+Route::get('/analytics', [ControlController::class, 'analytics'])->name('analytics')->middleware('auth');
+Route::get('/history', [ControlController::class, 'history'])->name('history')->middleware('auth');
+Route::get('/history/detail/{user}', [ControlController::class, 'detail'])->name('history.detail')->middleware('auth');
+Route::get('/history/audit/detail/{audit}', [ControlController::class, 'methods'])->name('history.history')->middleware('auth');
