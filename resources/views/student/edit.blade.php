@@ -51,11 +51,10 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="email">Email</label>
-                                <input class="form-control @error('email', 'post') is-invalid @enderror" id="email" type="email" name="email"
-                                    value="{{ $student->email }}">
-                                @error('email')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                <input class="form-control" type="text"
+                                    value="{{ $student->email }}" disabled>
+                                <input class="form-control" id="email" type="email" name="email"
+                                    value="{{ $student->email }}" hidden>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="birth_date">Date of birth</label>

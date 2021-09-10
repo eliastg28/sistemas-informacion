@@ -107,7 +107,6 @@ class StudentController extends Controller
         $permanence = $request->validate([
             'name' => 'required|string|max:40',
             'surname' => 'required|string|max:40',
-            'email' => 'required|string|email|max:50',
             'birth' => 'required'
         ]);
 
