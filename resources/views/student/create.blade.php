@@ -21,34 +21,43 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="fullname">Full name</label>
-                                <input class="form-control" id="fullname" type="text" name="name">
-                                <div class="form-control-feedback">Success! You've done it.</div>
+                                <input class="form-control @error('name', 'post') is-invalid @enderror" id="fullname"
+                                    type="text" name="name" value="{{ old('name') }}">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="surname">Surnames</label>
-                                <input class="form-control" id="surname" type="text" name="surname">
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+                                <input class="form-control @error('surname', 'post') is-invalid @enderror" id="surname"
+                                    type="text" name="surname" value="{{ old('surname') }}">
+                                @error('surname')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="gender">Gender</label>
                                 <select class="form-control" id="gender" name="gender">
-                                    <option value="M">Male</option>
-                                    <option value="F">Famale</option>
+                                    <option value="M" {{ old('gender') == 'M'}}>Male</option>
+                                    <option value="F" {{ old('gender') == 'F' ? 'selected' : 'M' }}>Female</option>
                                 </select>
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="email">Email</label>
-                                <input class="form-control" id="email" type="email" name="email">
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+                                <input class="form-control @error('email', 'post') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="birth_date">Date of birth</label>
-                                <input class="form-control" id="birth_date" type="text" name="birth"
+                                <input class="form-control @error('birth', 'post') is-invalid @enderror" id="birth_date" type="text" name="birth" value="{{ old('birth') }}"
                                     placeholder="Select Date">
-                                <div class="form-control-feedback">Success! You've done it.</div>
+                                @error('birth')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>

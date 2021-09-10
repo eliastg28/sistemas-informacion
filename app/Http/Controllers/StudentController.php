@@ -50,6 +50,18 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        $student = $request->validate([
+            'name' => 'required|string|max:40',
+            'surname' => 'required|string|max:40',
+            'email' => 'required|string|email|max:50|unique:students,email',
+            'birth' => 'required'
+        ]);
+
+        $name = $request->old('name');
+        $surname = $request->old('surname');
+        $email = $request->old('email');
+        $birth = $request->old('birth');
+
         $student = Student::create($request->all());
         // valores para la auditoria
         $type = 'create';
@@ -92,6 +104,14 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         //
+
+        $permanence = $request->validate([
+            'name' => 'required|string|max:40',
+            'surname' => 'required|string|max:40',
+            'email' => 'required|string|email|max:50',
+            'birth' => 'required'
+        ]);
+
         $permanence = Student::find($student->id);
         $id = DB::table('audit_permanence')->insertGetId([
             'name' => $permanence->name,

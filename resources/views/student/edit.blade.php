@@ -21,15 +21,19 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="fullname">Full name</label>
-                                <input class="form-control" id="fullname" type="text" name="name"
-                                    value="{{ $student->name }}">
-                                <div class="form-control-feedback">Success! You've done it.</div>
+                                <input class="form-control @error('name', 'post') is-invalid @enderror" id="fullname"
+                                    type="text" name="name" value="{{ $student->name }}">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="surname">Surnames</label>
-                                <input class="form-control" id="surname" type="text" name="surname"
+                                <input class="form-control @error('surname', 'post') is-invalid @enderror" id="surname" type="text" name="surname"
                                     value="{{ $student->surname }}">
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+                                @error('surname')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="gender">Gender</label>
@@ -39,34 +43,38 @@
                                         @endif>Male</option>
                                     <option value="F" @if ($student->gender == 'F')
                                         selected
-                                        @endif>Famale</option>
+                                        @endif>Female</option>
                                 </select>
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+                               
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="email">Email</label>
-                                <input class="form-control" id="email" type="email" name="email"
+                                <input class="form-control @error('email', 'post') is-invalid @enderror" id="email" type="email" name="email"
                                     value="{{ $student->email }}">
-                                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="birth_date">Date of birth</label>
-                                <input class="form-control" id="birth_date" type="text" name="birth"
+                                <input class="form-control @error('birth', 'post') is-invalid @enderror" id="birth_date" type="text" name="birth"
                                     placeholder="Select Date" value="{{ $student->birth }}">
-                                <div class=" form-control-feedback">Success! You've done it.
-                                </div>
+                                @error('birth')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-around">
-                        <button class="btn btn-primary" type="submit">Update student</button>
-                        <a class="btn btn-danger" href="/student">Back</a>
-                    </div>
-                </form>
             </div>
+            <div class="card-footer d-flex justify-content-around">
+                <button class="btn btn-primary" type="submit">Update student</button>
+                <a class="btn btn-danger" href="/student">Back</a>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
 @endsection
 
