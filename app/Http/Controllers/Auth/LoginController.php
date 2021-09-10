@@ -89,7 +89,7 @@ class LoginController extends Controller
         $agentUser = $_SERVER["HTTP_USER_AGENT"];
         $parser = Parser::create();
         $result = $parser->parse($agentUser);
-        $browser = $result->ua->toString();
+        $browser = $result->ua->family;
         $device = $result->device->toString();
         $system = $result->os->toString();
 

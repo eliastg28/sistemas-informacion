@@ -25,7 +25,6 @@ class StudentController extends Controller
         // valores para la auditoria
         $type = 'view';
         $status = 'success';
-        $this->au_modifications($type, 0, $status, 0);
         return view('student.index', compact('url', 'students'));
     }
 

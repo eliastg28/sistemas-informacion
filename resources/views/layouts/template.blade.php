@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
-<body >
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-5">
         {{-- <a class="navbar-brand" href="#">Information Systems</a> --}}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -39,7 +39,24 @@
                         <a class="nav-link" href="{{ route('student.index') }}">Students</a>
                     </li>
                 @endif
-
+                @if ($url == 'Analytics')
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('analytics') }}">Analytics</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('analytics') }}">Analytics</a>
+                    </li>
+                @endif
+                @if ($url == 'History')
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('history') }}">History</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('history') }}">History</a>
+                    </li>
+                @endif
             </ul>
 
             <ul class="nav nav-tabs">

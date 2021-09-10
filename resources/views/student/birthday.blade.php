@@ -36,12 +36,20 @@
                                         <td>{{ $birthdayStudent[$i]->email }}</td>
                                         <td>{{ $birthdayStudent[$i]->birth }}</td>
                                         <td>{{ $birthdayStudent[$i]->gender }}</td>
-                                        <td class="d-flex justify-content-center">
-                                            <a href="{{ route('mail', $birthdayStudent[$i]->id) }}">
-                                                <i class="fas fa-birthday-cake"></i>
-                                                Happy Birthday
-                                            </a>
-                                        </td>
+                                        @if ($students[$i] == 'true')
+                                            <td class="d-flex justify-content-center">
+                                                <a href="{{ route('mail', $birthdayStudent[$i]->id) }}">
+                                                    <i class="fas fa-birthday-cake"></i>
+                                                   Send Congratulation
+                                                </a>
+                                            </td>
+                                        @else
+
+                                        <td class="d-flex justify-content-center">{{$students[$i]}}</td>
+
+
+                                        @endif
+
                                     </tr>
                                 @endfor
                             </tbody>

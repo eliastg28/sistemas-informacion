@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title">Chart of Ages</h3>
+                <h3 class="tile-title"> <i class="fas fa-chart-bar"></i> Chart of Ages</h3>
                 <div class="embed-responsive embed-responsive-16by9">
                     <canvas class="embed-responsive-item" id="ages"></canvas>
                 </div>
@@ -56,7 +56,7 @@
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title">Pie Chart</h3>
+                <h3 class="tile-title"> <i class="fas fa-chart-pie"></i> Gender</h3>
                 <div class="embed-responsive embed-responsive-16by9">
                     <canvas class="embed-responsive-item" id="gender"></canvas>
                 </div>
