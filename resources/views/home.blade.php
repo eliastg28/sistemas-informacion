@@ -114,7 +114,7 @@
             data: {
                 labels: [
                     'Male',
-                    'Famale'
+                    'Female'
                 ],
                 datasets: [{
                     label: 'Gender',
