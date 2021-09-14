@@ -8,6 +8,7 @@
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fas fa-history fa-lg"></i></li>
             <li class="breadcrumb-item"><a href="/history">History</a></li>
+            <li class="breadcrumb-item"><a href="/history/audit/detail/{{$audit}}">Audit details</a></li>
 
         </ul>
     </div>
@@ -23,14 +24,20 @@
                                     <th>#</th>
                                     <th>Type</th>
                                     <th>Status</th>
+                                    <th>Option</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for ($i = 0; $i < sizeof($data); $i++)
                                     <tr>
-                                        <th>{{ $data[$i]->id }}</th>
+                                        <th>{{ $i + 1 }}</th>
                                         <td>{{ $data[$i]->type }}</td>
                                         <td>{{ $data[$i]->status }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <a href="{{ route('history.modification',  $data[$i]->id) }}">
+                                                <i class="fas fa-file">  Modification Details</i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endfor
                             </tbody>

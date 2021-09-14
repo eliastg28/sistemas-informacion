@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audit;
+use App\Models\AuditModification;
+use App\Models\AuditPermanence;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -65,7 +68,7 @@ class StudentController extends Controller
         // valores para la auditoria
         $type = 'create';
         $status = 'success'; // si se produce un validacion erronea sera (error, warning, ..)
-        $this->au_modifications($type, $student->id, $status, 0);
+        $this->au_modifications($type, $student->id, $status, $student->id);
         return redirect()->route('student.index');
     }
 
@@ -111,13 +114,7 @@ class StudentController extends Controller
         ]);
 
         $permanence = Student::find($student->id);
-        $id = DB::table('audit_permanence')->insertGetId([
-            'name' => $permanence->name,
-            'surname' => $permanence->surname,
-            'email' => $permanence->email,
-            'gender' => $permanence->gender,
-            'birth' => $permanence->birth
-        ]);
+
         Student::find($student->id)->update([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -128,7 +125,7 @@ class StudentController extends Controller
 
         $type = 'update';
         $status = 'success'; // si se produce un validacion erronea sera (error, warning, ...)
-        $this->au_modifications($type, $student->id, $status, $id);
+        $this->au_modifications($type, $student->id, $status, $permanence);
         return redirect()->route('student.index');
     }
 
@@ -147,12 +144,20 @@ class StudentController extends Controller
     private function au_modifications($type, $data, $status, $permanence)
     {
         $audit = session('audit');
-        DB::table('audit_modifications')->insert([
+        $modification = AuditModification::create([
             'type' => $type,
             'status' => $status,
             'data' => $data,
-            'permanence' => $permanence,
             'audit_id' => $audit
+        ]);
+
+        AuditPermanence::create([
+            'name' => $permanence->name,
+            'surname' => $permanence->surname,
+            'email' => $permanence->email,
+            'gender' => $permanence->gender,
+            'birth' => $permanence->birth,
+            'audit_modification_id' => $modification->id
         ]);
     }
 }

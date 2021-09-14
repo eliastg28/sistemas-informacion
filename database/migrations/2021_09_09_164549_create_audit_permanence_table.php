@@ -20,6 +20,7 @@ class CreateAuditPermanenceTable extends Migration
             $table->string('email');
             $table->char('gender');
             $table->date('birth');
+            $table->foreignId('audit_modification_id')->constrained();
             $table->timestamps();
         });
     }

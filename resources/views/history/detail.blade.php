@@ -30,7 +30,7 @@
                             <tbody>
                                 @for ($i = 0; $i < sizeof($sessions); $i++)
                                     <tr>
-                                        <th>{{$sessions[$i]['data'][0]->id}}</th>
+                                        <th>{{ ($i + 1) }}</th>
                                         <td>{{ $sessions[$i]['data'][0]->browser }}</td>
                                         <td>{{ $sessions[$i]['data'][0]->system }}</td>
                                         <td>{{ $sessions[$i]['time'] }} seconds</td>

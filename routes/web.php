@@ -39,3 +39,4 @@ Route::get('/analytics', [ControlController::class, 'analytics'])->name('analyti
 Route::get('/history', [ControlController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/history/detail/{user}', [ControlController::class, 'detail'])->name('history.detail')->middleware('auth');
 Route::get('/history/audit/detail/{audit}', [ControlController::class, 'methods'])->name('history.history')->middleware('auth');
+Route::get('/history/audit/detail/modification/{id}', [ControlController::class, 'DetailModification'])->name('history.modification')->middleware('auth');

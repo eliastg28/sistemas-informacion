@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audit;
+use App\Models\AuditModification;
+use App\Models\AuditPermanence;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +18,7 @@ class ControlController extends Controller
     public function birthdayStudents()
     {
         // Fecha actual
+
         $datecurrent = date('d-m-Y');
         $day = date('d');
         $month = date('m');
@@ -38,7 +43,7 @@ class ControlController extends Controller
         $dateBirth = strtotime($birth);
         $daybirth = date('d', $dateBirth);
         $day = date('d');
-
+        $day -= 1;
         if($day == $daybirth){
             return 'true';
         }else{
@@ -69,8 +74,16 @@ class ControlController extends Controller
     public function history()
     {
         $audits = DB::select('SELECT us.name, COUNT(us.name) AS audit FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id GROUP BY(us.name) ORDER BY (us.name)');
-        $users  =  DB::select('SELECT us.id FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id ORDER BY (us.name)');
+        $users  =  DB::select('SELECT  us.id FROM `audits` AS au INNER JOIN users AS us on us.id = au.user_id ORDER BY (us.name)');
+        // $users = Audit::select('users.id', 'users.name')->join('users', 'audits.user_id', '=', 'users.id')->orderBy('users.name')->get();
         $url = 'History';
+        $arrayunique = array();
+        foreach ($users as $key => $user) {
+            array_push($arrayunique, $user->id);
+        }
+        // return $audits;
+        $users = array_values(array_unique($arrayunique));
+        // return $users;
         return view('history.index', compact('url', 'audits', 'users'));
     }
     public function detail($user_id)
@@ -131,7 +144,18 @@ class ControlController extends Controller
 
         $url = 'History';
         // return $data[0]->ids;
-        return view('history.method', compact('url', 'data'));
+        return view('history.method', compact('url', 'data', 'audit'));
 
+    }
+
+
+    public function DetailModification($id)
+    {
+        $modification = AuditModification::find($id);
+        $permanence = AuditPermanence::where('audit_modification_id', $id)->first();
+        $student = Student::where('email', $permanence->email)->first();
+        $type = $modification->type;
+        $url = 'History';
+        return view('history.modification', compact('url', 'id', 'permanence', 'student', 'type'));
     }
 }

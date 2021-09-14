@@ -30,7 +30,7 @@
                                         <td>{{ $audits[$i]->name }}</td>
                                         <td>{{ $audits[$i]->audit }}</td>
                                         <td class="d-flex justify-content-center">
-                                            <a href="{{ route('history.detail', $users[$i]->id) }}">
+                                            <a href="{{ route('history.detail', $users[$i]) }}">
                                                 <i class="fas fa-file"> Details</i>
                                             </a>
                                         </td>

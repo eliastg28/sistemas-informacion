@@ -18,7 +18,6 @@ class CreateAuditModificationsTable extends Migration
             $table->string('type');
             $table->string('status');
             $table->integer('data');
-            $table->integer('permanence');
             $table->foreignId('audit_id')->constrained();
             $table->timestamps();
         });
